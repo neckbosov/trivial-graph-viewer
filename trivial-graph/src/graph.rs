@@ -1,16 +1,13 @@
-use std::collections::{HashMap, HashSet, VecDeque};
-use std::error::Error as StdError;
-use std::fmt::{Debug, Display, Formatter};
+use std::collections::{HashMap, HashSet};
+use std::fmt::Debug;
 use std::io::{BufRead, BufReader, Read};
 use std::num::ParseIntError;
-use std::ops::IndexMut;
 use std::option::Option::Some;
 use std::str::FromStr;
 
 use thiserror::Error;
 
 use crate::bfs_visitor::BfsVisitor;
-use crate::dfs_visitor::DfsVisitor;
 use crate::graph_vertex::GraphVertex;
 use crate::graph_visitor::GraphVisitor;
 use crate::visit_order::VisitOrder;

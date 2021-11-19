@@ -1,5 +1,3 @@
-use std::collections::BTreeSet;
-
 pub struct GraphVertex<T> {
     pub id: usize,
     pub value: T,

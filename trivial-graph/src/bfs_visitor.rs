@@ -4,7 +4,6 @@ use std::str::FromStr;
 use crate::graph::Graph;
 use crate::graph_vertex::GraphVertex;
 use crate::graph_visitor::GraphVisitor;
-use crate::visit_order::VisitOrder;
 
 pub struct BfsVisitor<'a, T: FromStr> {
     visited: HashSet<usize>,
