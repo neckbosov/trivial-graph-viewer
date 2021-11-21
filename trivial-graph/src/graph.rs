@@ -246,7 +246,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// "#\n",
     /// "1 2\n"
     /// ).as_bytes();
-    /// let res = Graph::<i32>::read_from(&mut graph_string);
+    /// let res = Graph::<i32>::from_reader(&mut graph_string);
     /// assert!(res.is_ok());
     /// let graph = res.unwrap();
     /// assert_eq!(graph.get_vertices_ids(), HashSet::from([1, 2]));
@@ -263,7 +263,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// "#\n",
     /// "1 2\n"
     /// ).as_bytes();
-    /// let res = Graph::<i32>::read_from(&mut graph_string);
+    /// let res = Graph::<i32>::from_reader(&mut graph_string);
     /// assert!(res.is_err());
     /// let err = res.unwrap_err();
     /// if let GraphParseError::<ParseIntError>::ValueParseError(e) = err {
@@ -282,7 +282,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// "#\n",
     /// "1 w\n"
     /// ).as_bytes();
-    /// let res = Graph::<i32>::read_from(&mut graph_string);
+    /// let res = Graph::<i32>::from_reader(&mut graph_string);
     /// assert!(res.is_err());
     /// let err = res.unwrap_err();
     /// if let GraphParseError::<ParseIntError>::VertexParseError(e) = err {
@@ -301,7 +301,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// "#\n",
     /// "1\n"
     /// ).as_bytes();
-    /// let res = Graph::<i32>::read_from(&mut graph_string);
+    /// let res = Graph::<i32>::from_reader(&mut graph_string);
     /// assert!(res.is_err());
     /// let err = res.unwrap_err();
     /// if let GraphParseError::<ParseIntError>::DataError(_, _) = err {
@@ -310,7 +310,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///     assert!(false, "Incorrect error type");
     /// }
     /// ```
-    pub fn read_from<R: Read>(reader: &mut R) -> Result<Self, GraphParseError<T::Err>> {
+    pub fn from_reader<R: Read>(reader: &mut R) -> Result<Self, GraphParseError<T::Err>> {
         let mut graph = Self {
             vertices: Default::default(),
             edges: Default::default(),
