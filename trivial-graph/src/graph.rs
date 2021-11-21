@@ -7,9 +7,7 @@ use std::str::FromStr;
 
 use thiserror::Error;
 
-use crate::bfs_visitor::BfsVisitor;
-use crate::graph_vertex::GraphVertex;
-use crate::graph_visitor::GraphVisitor;
+use crate::{BfsVisitor, GraphVertex, GraphVisitor};
 
 #[derive(Error, Debug)]
 pub struct VertexValueParseError<E>(#[from] E);
@@ -55,7 +53,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::collections::HashSet;
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// assert_eq!(graph.get_vertices_ids().len(), 1);
@@ -72,7 +70,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// If vertex does not exists, nothing happens.
     ///
     /// ```
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// graph.remove_vertex(2);
@@ -96,7 +94,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// Returns [`VertexNotExistsError`] if one of vertices not in graph.
     ///
     /// ```
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// graph.add_vertex(2, "node2".to_string());
@@ -129,7 +127,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::collections::HashSet;
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// graph.add_vertex(2, "node2".to_string());
@@ -151,7 +149,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// If vertex not presented in graph, returns `None`.
     ///
     /// ```
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// let vertex = graph.get_vertex(1);
@@ -172,7 +170,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::collections::HashSet;
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// graph.add_vertex(2, "node2".to_string());
@@ -196,7 +194,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::collections::HashSet;
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// graph.add_vertex(2, "node2".to_string());
@@ -208,10 +206,10 @@ impl<T: FromStr + Display> Graph<T> {
 
     /// Visit vertices in graph with `bfs` algorithm starting from `start_vertex` and apply `f` to them.
     ///
-    /// In you want to visit all vertices in graph, see [`BfsVisitor`] for more details.
+    /// In you want to visit all vertices in graph, see [`BfsVisitor`] and [`VisitOrder`] for more details.
     /// ```
     /// use std::collections::HashSet;
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph = Graph::new();
     /// graph.add_vertex(1, "node".to_string());
     /// graph.add_vertex(2, "node2".to_string());
@@ -220,6 +218,7 @@ impl<T: FromStr + Display> Graph<T> {
     /// assert!(graph.add_edge(1, 2).is_ok());
     /// assert!(graph.add_edge(1, 3).is_ok());
     /// assert!(graph.add_edge(2, 4).is_ok());
+    /// assert!(graph.add_edge(3, 4).is_ok());
     /// let mut visited_vertices = Vec::new();
     /// graph.bfs(1, |v| {visited_vertices.push(v.id)});
     /// assert_eq!(visited_vertices.len(), 4);
@@ -240,7 +239,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::collections::HashSet;
-    /// use trivial_graph::graph::Graph;
+    /// use trivial_graph::Graph;
     /// let mut graph_string = concat!(
     /// "1 1\n",
     /// "2 2\n",
@@ -257,7 +256,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::num::ParseIntError;
-    /// use trivial_graph::graph::{Graph, GraphParseError};
+    /// use trivial_graph::{Graph, GraphParseError};
     /// let mut graph_string = concat!(
     /// "1 1\n",
     /// "2 kek\n",
@@ -276,7 +275,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::num::ParseIntError;
-    /// use trivial_graph::graph::{Graph, GraphParseError};
+    /// use trivial_graph::{Graph, GraphParseError};
     /// let mut graph_string = concat!(
     /// "1 1\n",
     /// "2 2\n",
@@ -295,7 +294,7 @@ impl<T: FromStr + Display> Graph<T> {
     ///
     /// ```
     /// use std::num::ParseIntError;
-    /// use trivial_graph::graph::{Graph, GraphParseError};
+    /// use trivial_graph::{Graph, GraphParseError};
     /// let mut graph_string = concat!(
     /// "1 1\n",
     /// "2 2\n",

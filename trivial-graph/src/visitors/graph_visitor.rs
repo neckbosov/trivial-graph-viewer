@@ -1,10 +1,8 @@
 use std::fmt::Display;
 use std::str::FromStr;
 
-use crate::graph::Graph;
-use crate::graph_vertex::GraphVertex;
-use crate::topological_sort::TopologicalSort;
-use crate::visit_order::VisitOrder;
+use crate::{Graph, GraphVertex, VisitOrder};
+use crate::visitors::topological_sort::TopologicalSort;
 
 pub trait GraphVisitor<T: FromStr + Display> {
     fn visit<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, vertex: usize, f: F);
