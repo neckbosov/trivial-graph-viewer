@@ -32,7 +32,7 @@ pub enum GraphParseError<E> {
     VertexNotExists(#[from] VertexNotExistsError),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Graph<T: FromStr + Display> {
     vertices: HashMap<usize, GraphVertex<T>>,
     edges: HashMap<usize, HashSet<usize>>,
@@ -184,7 +184,7 @@ impl<T: FromStr + Display> Graph<T> {
                 self.edges
                     .get(&vertex)
                     .map(Clone::clone)
-                    .unwrap_or(HashSet::new()),
+                    .unwrap_or_default(),
             )
         } else {
             None
@@ -225,8 +225,8 @@ impl<T: FromStr + Display> Graph<T> {
     /// assert_eq!(visited_vertices[0], 1);
     /// assert_eq!(visited_vertices[3], 4);
     /// ```
-    pub fn bfs<F: FnMut(&GraphVertex<T>) -> ()>(&self, start_vertex: usize, f: F) {
-        BfsVisitor::new(&self).visit(start_vertex, f);
+    pub fn bfs<F: FnMut(&GraphVertex<T>)>(&self, start_vertex: usize, f: F) {
+        BfsVisitor::new(self).visit(start_vertex, f);
     }
 
     /// Reads graph from given reader and return `Graph` structure.
@@ -332,7 +332,7 @@ impl<T: FromStr + Display> Graph<T> {
             let vertex_id: usize = parts[0].parse()?;
             let value: T = parts[1]
                 .parse()
-                .map_err(|err| VertexValueParseError::from(err))?;
+                .map_err(VertexValueParseError::from)?;
             graph.add_vertex(vertex_id, value);
         }
         loop {

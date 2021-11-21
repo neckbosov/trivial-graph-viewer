@@ -5,10 +5,10 @@ use crate::{Graph, GraphVertex, VisitOrder};
 use crate::visitors::topological_sort::TopologicalSort;
 
 pub trait GraphVisitor<T: FromStr + Display> {
-    fn visit<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, vertex: usize, f: F);
+    fn visit<F: FnMut(&GraphVertex<T>)>(&mut self, vertex: usize, f: F);
     fn clear(&mut self);
     fn get_graph(&self) -> &Graph<T>;
-    fn visit_all<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, visit_order: VisitOrder, mut f: F) {
+    fn visit_all<F: FnMut(&GraphVertex<T>)>(&mut self, visit_order: VisitOrder, mut f: F) {
         self.clear();
         let vertices: Vec<_> = match visit_order {
             VisitOrder::Undefined => self.get_graph().get_vertices_ids().into_iter().collect(),

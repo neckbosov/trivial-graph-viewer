@@ -63,7 +63,7 @@ impl<'a, T: FromStr + Display> BfsVisitor<'a, T> {
         }
     }
 
-    fn bfs_impl<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, v: usize, f: &mut F) {
+    fn bfs_impl<F: FnMut(&GraphVertex<T>)>(&mut self, v: usize, f: &mut F) {
         let mut vertex_queue = VecDeque::new();
         if !self.visited.contains(&v) {
             vertex_queue.push_back(v);
@@ -85,7 +85,7 @@ impl<'a, T: FromStr + Display> BfsVisitor<'a, T> {
 }
 
 impl<'a, T: FromStr + Display> GraphVisitor<T> for BfsVisitor<'a, T> {
-    fn visit<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, vertex: usize, f: F) {
+    fn visit<F: FnMut(&GraphVertex<T>)>(&mut self, vertex: usize, f: F) {
         let mut f = f;
         self.bfs_impl(vertex, &mut f);
     }
@@ -95,6 +95,6 @@ impl<'a, T: FromStr + Display> GraphVisitor<T> for BfsVisitor<'a, T> {
     }
 
     fn get_graph(&self) -> &Graph<T> {
-        &self.graph
+        self.graph
     }
 }

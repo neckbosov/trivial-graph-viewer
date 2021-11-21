@@ -62,7 +62,7 @@ impl<'a, T: FromStr + Display> DfsVisitor<'a, T> {
         }
     }
 
-    fn dfs_impl<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, v: usize, f: &mut F) {
+    fn dfs_impl<F: FnMut(&GraphVertex<T>)>(&mut self, v: usize, f: &mut F) {
         if self.visited.contains(&v) {
             return;
         }
@@ -77,7 +77,7 @@ impl<'a, T: FromStr + Display> DfsVisitor<'a, T> {
 }
 
 impl<'a, T: FromStr + Display> GraphVisitor<T> for DfsVisitor<'a, T> {
-    fn visit<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, vertex: usize, f: F) {
+    fn visit<F: FnMut(&GraphVertex<T>)>(&mut self, vertex: usize, f: F) {
         let mut f = f;
         self.dfs_impl(vertex, &mut f);
     }
@@ -87,6 +87,6 @@ impl<'a, T: FromStr + Display> GraphVisitor<T> for DfsVisitor<'a, T> {
     }
 
     fn get_graph(&self) -> &Graph<T> {
-        &self.graph
+        self.graph
     }
 }
