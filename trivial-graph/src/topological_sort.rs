@@ -1,15 +1,16 @@
 use std::collections::HashSet;
+use std::fmt::Display;
 use std::str::FromStr;
 
 use crate::graph::Graph;
 
-pub(crate) struct TopologicalSort<'a, T: FromStr> {
+pub(crate) struct TopologicalSort<'a, T: FromStr + Display> {
     graph: &'a Graph<T>,
     visited: HashSet<usize>,
     order: Vec<usize>,
 }
 
-impl<'a, T: FromStr> TopologicalSort<'a, T> {
+impl<'a, T: FromStr + Display> TopologicalSort<'a, T> {
     pub(crate) fn new(graph: &'a Graph<T>) -> Self {
         Self {
             graph,
@@ -24,7 +25,7 @@ impl<'a, T: FromStr> TopologicalSort<'a, T> {
         self.visited.insert(v);
         if let Some(neighbours) = self.graph.get_neighbours(v) {
             for nx in neighbours {
-                self.dfs(*nx);
+                self.dfs(nx);
             }
         }
 

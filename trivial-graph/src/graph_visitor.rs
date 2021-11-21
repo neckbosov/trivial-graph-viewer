@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use std::str::FromStr;
 
 use crate::graph::Graph;
@@ -5,7 +6,7 @@ use crate::graph_vertex::GraphVertex;
 use crate::topological_sort::TopologicalSort;
 use crate::visit_order::VisitOrder;
 
-pub trait GraphVisitor<T: FromStr> {
+pub trait GraphVisitor<T: FromStr + Display> {
     fn visit<F: FnMut(&GraphVertex<T>) -> ()>(&mut self, vertex: usize, f: F);
     fn clear(&mut self);
     fn get_graph(&self) -> &Graph<T>;
