@@ -1,5 +1,5 @@
 # trivial-graph-viewer
-Small library for serealizing and deserealizing and walking through directed graphs
+Small program for deserealizing directed graphs and printing it's values
 
 ```
 USAGE:
